@@ -5,8 +5,82 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HtmCreaterWpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Htm creater" 
+        Height="450" 
+        Width="800"
+        WindowStartupLocation="CenterScreen"
         
+        >
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.125*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0.125*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <!--Up-->
+        <Grid Grid.ColumnSpan="3" Grid.Row="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.5*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+
+                <Label Content="Путь до PDF"/>
+                <TextBlock Text="" VerticalAlignment="Center" MinWidth="550" Height="20" Background="AntiqueWhite"/>
+
+            </StackPanel>
+
+            <Button Margin="5" Grid.Column="2" Content="Установить путь до PDF"/>
+
+        </Grid>
+
+        <Button Height="50" Grid.Column="0" Grid.Row="1" Content="Left"/>
+
+        <!--Middle-->
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Image/>
+        </Grid>
+
+        <Button Height="50" Grid.Column="2" Grid.Row="1" Content="Right"/>
+
+        <!--Down-->
+        <Grid Grid.ColumnSpan="3" Grid.Row="2">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.5*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+
+                <Label Content="Папка для сохранения"/>
+                <TextBlock Text="" VerticalAlignment="Center" MinWidth="550" Height="20" Background="AntiqueWhite"/>
+
+            </StackPanel>
+
+            <Button Margin="5" Grid.Column="2" Content="Установить путь"/>
+
+        </Grid>
+
     </Grid>
 </Window>
