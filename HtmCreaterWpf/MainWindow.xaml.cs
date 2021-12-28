@@ -24,7 +24,7 @@ namespace HtmCreaterWpf
     public partial class MainWindow : Window
     {
 
-        private const string TEMP_FOLDER_NAME = "TempImages"; // Нужно
+        private const string TEMP_FOLDER_NAME = "TempImages";
 
         private string[] _pathImages;
 
