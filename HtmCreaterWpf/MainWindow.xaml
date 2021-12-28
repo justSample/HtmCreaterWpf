@@ -14,74 +14,64 @@
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.1*"/>
+            <ColumnDefinition Width="0.3*"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
-            <ColumnDefinition Width="0.1*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition/>
-            <RowDefinition Height="30"/>
-        </Grid.RowDefinitions>
 
-        <!--Up-->
-        <Grid Grid.ColumnSpan="3" Grid.Row="0">
+        <!--Left-->
+        <Grid Grid.Column="0">
+
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="93*"/>
-                <ColumnDefinition Width="338*"/>
-                <ColumnDefinition Width="128*"/>
-                <ColumnDefinition Width="233*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-
+            
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-
-            <Button x:Name="BtnLoadPdfImages" Margin="5" Grid.Column="0" Grid.ColumnSpan="4" Content="Загрузить картинки из PDF" Click="BtnLoadPdfImages_Click" />
-
-        </Grid>
-
-        <Button x:Name="BtnPrev" Height="50" Grid.Column="0" Grid.Row="1" Content="Left" Click="BtnPrev_Click"/>
-
-        <!--Middle-->
-        <Grid Grid.Column="1" Grid.Row="1">
-
-            <Grid.RowDefinitions>
-                <RowDefinition />
                 <RowDefinition Height="0.1*"/>
+                <RowDefinition/>
+                <RowDefinition Height="0.05*"/>
             </Grid.RowDefinitions>
 
-            <Image Grid.Row="0" x:Name="ImgHolst"/>
-            <CheckBox Grid.Row="2" x:Name="IsAddToWord" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Добавить в Word" Margin="260,5" Click="IsAddToWord_Click"/>
+            <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="10" x:Name="BtnLoadPdfImages" Margin="5" Content="Загрузить картинки из PDF" Click="BtnLoadPdfImages_Click" />
+
+            <StackPanel Grid.Row="1" Grid.ColumnSpan="10" Orientation="Vertical" VerticalAlignment="Center">
+                <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Content="Название файла" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBox Margin="5,0" x:Name="txtBoxHtmName" Grid.Column="1"  Text="" IsReadOnly="False" VerticalAlignment="Center" FontSize="14" Background="AntiqueWhite"/>
+                <Button x:Name="BtnCreateHtm" Margin="5" Grid.Column="2" Content="Создать htm" Click="BtnCreateHtm_Click"/>
+            </StackPanel>
+
+            <Button x:Name="BtnPrev"  Grid.Column="0" Grid.Row="2" Content="Left" Click="BtnPrev_Click"/>
+            <Button x:Name="BtnRight" Grid.Column="1" Grid.Row="2" Content="Right" Click="BtnRight_Click"/>
+
         </Grid>
 
-        <Button x:Name="BtnRight" Height="50" Grid.Column="2" Grid.Row="1" Content="Right" Click="BtnRight_Click"/>
-
-        <!--Down-->
-        <Grid Grid.ColumnSpan="3" Grid.Row="2">
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" ResizeDirection="Columns" Width="5"/>
+        
+        <!--Right-->
+        <Grid Grid.Column="2">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.225*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="0.225*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
+                <RowDefinition/>
+                <RowDefinition Height="0.05*"/>
             </Grid.RowDefinitions>
+            
+            <Image Grid.Row="0" Grid.RowSpan="1" Grid.ColumnSpan="2" x:Name="ImgHolst"/>
+            <CheckBox Grid.Row="1" Grid.ColumnSpan="10" x:Name="IsAddToWord" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Добавить в Word" Click="IsAddToWord_Click"/>
 
+            
 
-            <Label Grid.Column="0" Content="Название файла" HorizontalAlignment="Center"/>
-            <TextBox x:Name="txtBoxHtmName" Grid.Column="1"  Text="" IsReadOnly="False" VerticalAlignment="Center" FontSize="14" Background="AntiqueWhite"/>
-
-
-
-            <Button x:Name="BtnCreateHtm" Margin="5" Grid.Column="2" Content="Создать htm" Click="BtnCreateHtm_Click"/>
 
         </Grid>
+
+        
 
     </Grid>
 </Window>

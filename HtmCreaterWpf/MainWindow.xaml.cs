@@ -52,7 +52,22 @@ namespace HtmCreaterWpf
                     Directory.Delete(_tempDirPath);
                 }
             };
-
+            this.KeyDown += (o, e) =>
+            {
+                switch (e.Key)
+                {
+                    case Key.NumPad4:
+                        SetElement(_container.PrevImage());
+                        break;
+                    case Key.NumPad6:
+                        SetElement(_container.NextImage());
+                        break;
+                    case Key.NumPad5:
+                        _container.CurrentElement.IsAdd = !_container.CurrentElement.IsAdd;
+                        IsAddToWord.IsChecked = _container.CurrentElement.IsAdd;
+                        break;
+                }
+            };
         }
 
         private void BtnLoadPdfImages_Click(object sender, RoutedEventArgs e)
