@@ -11,11 +11,23 @@ namespace HtmCreaterWpf.Utils
 {
     public class ElementInfo
     {
-
+        /// <summary>
+        /// Путь до изображения
+        /// </summary>
         public string Path { get; set; }
+        /// <summary>
+        /// Добавлять ли в файл
+        /// </summary>
         public bool IsAdd { get; set; }
+        /// <summary>
+        /// Изобраение из PDF
+        /// </summary>
         public ImageSource Image { get; set; }
 
+        /// <summary>
+        /// Конструктор :)
+        /// </summary>
+        /// <param name="path">Путь до изображения</param>
         public ElementInfo(string path)
         {
             Path = path;
@@ -23,6 +35,11 @@ namespace HtmCreaterWpf.Utils
             Image = GetImage(Path);
         }
 
+        /// <summary>
+        /// Возвращает изображение которое мы передаём по пути
+        /// </summary>
+        /// <param name="path">Путь до изображения</param>
+        /// <returns></returns>
         private BitmapImage GetImage(string path)
         {
             byte[] data = File.ReadAllBytes(path);
@@ -31,7 +48,7 @@ namespace HtmCreaterWpf.Utils
 
             using (MemoryStream ms = new MemoryStream(data))
             {
-                ms.Position = 0;
+                ms.Position = 0; //На всякий случай ставим позицию на 0
 
                 image.BeginInit();
                 image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;

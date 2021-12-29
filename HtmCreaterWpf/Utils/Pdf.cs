@@ -8,9 +8,9 @@ using System.Drawing.Imaging;
 
 namespace HtmCreaterWpf.Utils
 {
+    
     public class Pdf
     {
-
         private string _pdfPath;
 
         public Pdf(string pdfPath)
@@ -18,6 +18,10 @@ namespace HtmCreaterWpf.Utils
             _pdfPath = pdfPath;
         }
 
+        /// <summary>
+        /// Создаёт изображения из PDF, где 1 страница = 1 изображению
+        /// </summary>
+        /// <param name="outputDirPath">Путь до папки, куда сохранять изображения</param>
         public void CreateImages(string outputDirPath)
         {
             using(var doc = PdfiumViewer.PdfDocument.Load(_pdfPath))
@@ -52,6 +56,11 @@ namespace HtmCreaterWpf.Utils
             }
         }
 
+        /// <summary>
+        /// Получает тип кодирования изображения
+        /// </summary>
+        /// <param name="mimeType"></param>
+        /// <returns></returns>
         private static ImageCodecInfo GetEncoderInfo(string mimeType)
         {
             int j;

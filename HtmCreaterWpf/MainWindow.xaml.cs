@@ -1,20 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using HtmCreaterWpf.Utils;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using HtmCreaterWpf.Utils;
 
 namespace HtmCreaterWpf
 {
@@ -32,7 +21,7 @@ namespace HtmCreaterWpf
 
         private ElementContainer _container;
 
-        private bool isFirstTime = true;
+        private bool isFirstTime = true; //Нужен для того, чтоб в первый раз до загрузки ничего не сломалось
 
         public MainWindow()
         {
@@ -40,27 +29,13 @@ namespace HtmCreaterWpf
 
             _tempDirPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), TEMP_FOLDER_NAME);
 
-            this.Closing += (o, e) =>
-            {
-                if (Directory.Exists(_tempDirPath))
-                {
-                    string[] filesPaths = Directory.GetFiles(_tempDirPath);
-
-                    for (int i = 0; i < filesPaths.Length; i++)
-                    {
-                        File.Delete(filesPaths[i]);
-                    }
-
-                    Directory.Delete(_tempDirPath);
-                }
-            };
-            
+            this.Closing += (o, e) => CheckAndDeleteTempDir();
         }
 
         private void BtnLoadPdfImages_Click(object sender, RoutedEventArgs e)
         {
-            LoadImagesFromPdf();
-            ReadImageFiles();
+            CreateImagesFromPdf();
+            LoadImageFromFiles();
 
             if (isFirstTime)
             {
@@ -88,13 +63,17 @@ namespace HtmCreaterWpf
                 };
 
             }
+
+            ShowMessage("Хорошее сообщение", "Импорт изображений из PDF завершен", MessageBoxIcon.Information);
         }
 
-        private void LoadImagesFromPdf()
+        /// <summary>
+        /// Создание и загрузка изображений из PDF
+        /// </summary>
+        private void CreateImagesFromPdf()
         {
             using (OpenFileDialog fd = new OpenFileDialog())
             {
-
                 fd.Filter = "Pdf file (*.pdf) | *.pdf;"; ;
 
                 var result = fd.ShowDialog();
@@ -103,17 +82,7 @@ namespace HtmCreaterWpf
 
                 if(result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(pdfFilePath))
                 {
-                    if (Directory.Exists(_tempDirPath))
-                    {
-                        string[] filesPaths = Directory.GetFiles(_tempDirPath);
-
-                        for (int i = 0; i < filesPaths.Length; i++)
-                        {
-                            File.Delete(filesPaths[i]);
-                        }
-
-                        Directory.Delete(_tempDirPath);
-                    }
+                    CheckAndDeleteTempDir();
 
                     Directory.CreateDirectory(_tempDirPath);
 
@@ -124,7 +93,10 @@ namespace HtmCreaterWpf
             }
         }
 
-        private void ReadImageFiles()
+        /// <summary>
+        /// Загрузка сохранённых изображений из PDF
+        /// </summary>
+        private void LoadImageFromFiles()
         {
             _pathImages = Directory.GetFiles(_tempDirPath, "*.png", SearchOption.TopDirectoryOnly);
             _pathImages = _pathImages.OrderBy(p =>
@@ -148,6 +120,10 @@ namespace HtmCreaterWpf
             SetElement(_container.NextImage());
         }
 
+        /// <summary>
+        /// Ставит информацию элемента
+        /// </summary>
+        /// <param name="elInfo">Элемент, из которого требуется поставить информацию</param>
         private void SetElement(ElementInfo elInfo)
         {
             IsAddToWord.IsChecked = elInfo.IsAdd;
@@ -193,6 +169,24 @@ namespace HtmCreaterWpf
         private void ShowMessage(string title, string caption, MessageBoxIcon icon)
         {
             System.Windows.Forms.MessageBox.Show(caption, title, MessageBoxButtons.OK, icon);
+        }
+
+        /// <summary>
+        /// Проверяет наличие и удаляет временную папку с изображениями если таковая имеется
+        /// </summary>
+        private void CheckAndDeleteTempDir()
+        {
+            if (Directory.Exists(_tempDirPath))
+            {
+                string[] filesPaths = Directory.GetFiles(_tempDirPath);
+
+                for (int i = 0; i < filesPaths.Length; i++)
+                {
+                    File.Delete(filesPaths[i]);
+                }
+
+                Directory.Delete(_tempDirPath);
+            }
         }
 
     }
