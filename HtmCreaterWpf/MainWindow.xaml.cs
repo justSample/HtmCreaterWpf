@@ -32,6 +32,8 @@ namespace HtmCreaterWpf
 
         private ElementContainer _container;
 
+        private bool isFirstTime = true;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -52,28 +54,40 @@ namespace HtmCreaterWpf
                     Directory.Delete(_tempDirPath);
                 }
             };
-            this.KeyDown += (o, e) =>
-            {
-                switch (e.Key)
-                {
-                    case Key.NumPad4:
-                        SetElement(_container.PrevImage());
-                        break;
-                    case Key.NumPad6:
-                        SetElement(_container.NextImage());
-                        break;
-                    case Key.NumPad5:
-                        _container.CurrentElement.IsAdd = !_container.CurrentElement.IsAdd;
-                        IsAddToWord.IsChecked = _container.CurrentElement.IsAdd;
-                        break;
-                }
-            };
+            
         }
 
         private void BtnLoadPdfImages_Click(object sender, RoutedEventArgs e)
         {
             LoadImagesFromPdf();
             ReadImageFiles();
+
+            if (isFirstTime)
+            {
+                BtnPrev.Click += BtnPrev_Click;
+                BtnRight.Click += BtnRight_Click;
+                IsAddToWord.IsEnabled = true;
+                IsAddToWord.Click += IsAddToWord_Click;
+                isFirstTime = false;
+
+                this.KeyDown += (o, keyE) =>
+                {
+                    switch (keyE.Key)
+                    {
+                        case Key.NumPad4:
+                            SetElement(_container.PrevImage());
+                            break;
+                        case Key.NumPad6:
+                            SetElement(_container.NextImage());
+                            break;
+                        case Key.NumPad5:
+                            _container.CurrentElement.IsAdd = !_container.CurrentElement.IsAdd;
+                            IsAddToWord.IsChecked = _container.CurrentElement.IsAdd;
+                            break;
+                    }
+                };
+
+            }
         }
 
         private void LoadImagesFromPdf()
@@ -147,6 +161,18 @@ namespace HtmCreaterWpf
 
         private void BtnCreateHtm_Click(object sender, RoutedEventArgs e)
         {
+            if (_container == null)
+            {
+                ShowMessage("Плохое сообщение", "Создание документа невозможно. Нету фотографий", MessageBoxIcon.Error);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtBoxHtmName.Text))
+            {
+                ShowMessage("Плохое сообщение", "Наименование пустое", MessageBoxIcon.Error);
+                return;
+            }
+
             using (FolderBrowserDialog browserDialog = new FolderBrowserDialog())
             {
                 var result = browserDialog.ShowDialog();
@@ -160,6 +186,14 @@ namespace HtmCreaterWpf
 
                 }
             }
+
+            ShowMessage("Хорошее сообщение", "Создание документа завершено", MessageBoxIcon.Information);
         }
+
+        private void ShowMessage(string title, string caption, MessageBoxIcon icon)
+        {
+            System.Windows.Forms.MessageBox.Show(caption, title, MessageBoxButtons.OK, icon);
+        }
+
     }
 }
