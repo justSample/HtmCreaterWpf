@@ -1,4 +1,5 @@
 ﻿using HtmCreaterWpf.Utils;
+using System;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -15,6 +16,8 @@ namespace HtmCreaterWpf
 
         private const string TEMP_FOLDER_NAME = "TempImages";
 
+        private const string TEXT_PREVIEW = "Письмо №_-ИФ_09 от";
+
         private string[] _pathImages;
 
         private string _tempDirPath;
@@ -30,6 +33,8 @@ namespace HtmCreaterWpf
             _tempDirPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), TEMP_FOLDER_NAME);
 
             this.Closing += (o, e) => CheckAndDeleteTempDir();
+
+            txtBoxHtmName.Text = $"{BuilderInfo.GetCurrentYearAndQuarter()} {TEXT_PREVIEW} {DateTime.Now.ToString("dd.MM.yyyy")}(текст)";
         }
 
         private void BtnLoadPdfImages_Click(object sender, RoutedEventArgs e)
