@@ -43,7 +43,8 @@ namespace HtmCreaterWpf.Utils
             HtmlNode html = doc.DocumentNode.AppendChild(doc.CreateElement("html"));
             HtmlNode head = html.AppendChild(doc.CreateElement("head"));
             HtmlNode meta = head.AppendChild(doc.CreateElement("meta"));
-            meta.Attributes.Add("charset", "UTF-8");
+            meta.Attributes.Add("http-equiv", "Content-Type");
+            meta.Attributes.Add("content", "text/html; charset=utf-8");
             HtmlNode body = html.AppendChild(doc.CreateElement("body"));
 
             for (int i = 0; i < _pathImages.Length; i++)
@@ -58,7 +59,7 @@ namespace HtmCreaterWpf.Utils
                 body.AppendChild(img);
             }
 
-            doc.Save(Path.Combine(_outputDir, $"{_fileName}.htm")); //Сохраняем по пути до вывода с расширением htm
+            doc.Save(Path.Combine(_outputDir, $"{_fileName}.htm"), Encoding.UTF8); //Сохраняем по пути до вывода с расширением htm
 
         }
 
