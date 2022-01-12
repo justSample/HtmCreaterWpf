@@ -113,6 +113,10 @@ namespace HtmCreaterWpf
             _container = new ElementContainer(_pathImages);
 
             SetElement(_container.CurrentElement);
+
+            _container.OnChangeImage += SetPageIndex;
+            SetPageIndex();
+
         }
 
         private void BtnPrev_Click(object sender, RoutedEventArgs e)
@@ -194,5 +198,9 @@ namespace HtmCreaterWpf
             }
         }
 
+        private void SetPageIndex()
+        {
+            txtNumberPage.Text = "Страница №" + _container.CurrentIndex;
+        }
     }
 }

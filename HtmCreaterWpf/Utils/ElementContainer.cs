@@ -9,6 +9,9 @@ namespace HtmCreaterWpf.Utils
 {
     public class ElementContainer
     {
+
+        public event Action OnChangeImage;
+
         /// <summary>
         /// Все эелементы с информацией о картинках
         /// </summary>
@@ -19,10 +22,10 @@ namespace HtmCreaterWpf.Utils
         /// </summary>
         public ElementInfo CurrentElement
         {
-            get => Elements[_currentIndex];
+            get => Elements[CurrentIndex];
         }
 
-        private int _currentIndex = 0;
+        public int CurrentIndex { get; private set; }
 
         /// <summary>
         /// 
@@ -30,6 +33,8 @@ namespace HtmCreaterWpf.Utils
         /// <param name="paths">Массив с путями до картинок</param>
         public ElementContainer(string[] paths)
         {
+            CurrentIndex = 0;
+
             Elements = new List<ElementInfo>(paths.Length);
 
             for (int i = 0; i < paths.Length; i++)
@@ -45,9 +50,11 @@ namespace HtmCreaterWpf.Utils
         /// <returns></returns>
         public ElementInfo NextImage()
         {
-            if ((_currentIndex + 1) >= Elements.Count) return CurrentElement;
+            if ((CurrentIndex + 1) >= Elements.Count) return CurrentElement;
 
-            _currentIndex++;
+            CurrentIndex++;
+
+            OnChangeImage?.Invoke();
 
             return CurrentElement;
         }
@@ -58,9 +65,11 @@ namespace HtmCreaterWpf.Utils
         /// <returns></returns>
         public ElementInfo PrevImage()
         {
-            if ((_currentIndex - 1) < 0) return CurrentElement;
+            if ((CurrentIndex - 1) < 0) return CurrentElement;
 
-            _currentIndex--;
+            CurrentIndex--;
+
+            OnChangeImage?.Invoke();
 
             return CurrentElement;
         }
