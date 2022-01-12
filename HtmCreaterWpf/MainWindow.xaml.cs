@@ -30,7 +30,7 @@ namespace HtmCreaterWpf
         {
             InitializeComponent();
 
-            _tempDirPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), TEMP_FOLDER_NAME);
+            _tempDirPath = Path.Combine(Directory.GetCurrentDirectory(), TEMP_FOLDER_NAME);
 
             this.Closing += (o, e) => CheckAndDeleteTempDir();
 
@@ -83,10 +83,10 @@ namespace HtmCreaterWpf
 
                 var result = fd.ShowDialog();
 
-                string pdfFilePath = fd.FileName;
-
-                if(result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(pdfFilePath))
+                if(result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(fd.FileName))
                 {
+                    string pdfFilePath = fd.FileName;
+
                     CheckAndDeleteTempDir();
 
                     Directory.CreateDirectory(_tempDirPath);

@@ -20,11 +20,8 @@ namespace HtmCreaterWpf.Utils
         /// <summary>
         /// Получить текущий элемент
         /// </summary>
-        public ElementInfo CurrentElement
-        {
-            get => Elements[CurrentIndex];
-        }
-
+        public ElementInfo CurrentElement => Elements[CurrentIndex];
+        
         public int CurrentIndex { get; private set; }
 
         /// <summary>

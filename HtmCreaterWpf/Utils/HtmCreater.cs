@@ -11,9 +11,9 @@ namespace HtmCreaterWpf.Utils
     public class HtmCreater
     {
 
-        private string[] _pathImages;
-        private string _outputDir;
-        private string _fileName;
+        private readonly string[] _pathImages;
+        private readonly string _outputDir;
+        private readonly string _fileName;
 
         /// <summary>
         /// </summary>
