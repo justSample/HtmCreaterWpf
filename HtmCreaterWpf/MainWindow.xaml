@@ -41,6 +41,7 @@
                 <TextBox Margin="5,0" x:Name="txtBoxHtmName" Grid.Column="1" IsReadOnly="False" VerticalAlignment="Center" FontSize="14" Background="AntiqueWhite"/>
                 <Button x:Name="BtnCreateHtm" Margin="5" Grid.Column="2" Content="Создать htm" Click="BtnCreateHtm_Click"/>
                 <Label Content="Пример: 2021-3 Письмо №36820-ИФ_09 от 31.08.2021(Инд Алт края)"/>
+                <ComboBox x:Name="cmbBoxExample" Margin="5,0" SelectionChanged="CmbBoxExample_SelectionChanged"></ComboBox>
             </StackPanel>
 
             <Button x:Name="BtnPrev"  Grid.Column="0" Grid.Row="2" Content="Предыдущая"/>

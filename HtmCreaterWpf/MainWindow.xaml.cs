@@ -1,5 +1,6 @@
 ﻿using HtmCreaterWpf.Utils;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -18,6 +19,8 @@ namespace HtmCreaterWpf
 
         private const string TEXT_PREVIEW = "Письмо №_-ИФ_09 от";
 
+        private const string NAME_FILE_EXAMPLE = "examples.txt";
+
         private string[] _pathImages;
 
         private string _tempDirPath;
@@ -35,6 +38,9 @@ namespace HtmCreaterWpf
             this.Closing += (o, e) => CheckAndDeleteTempDir();
 
             txtBoxHtmName.Text = $"{BuilderInfo.GetCurrentYearAndQuarter()} {TEXT_PREVIEW} {DateTime.Now.ToString("dd.MM.yyyy")}(текст)";
+
+            InitExamples();
+
         }
 
         private void BtnLoadPdfImages_Click(object sender, RoutedEventArgs e)
@@ -80,18 +86,19 @@ namespace HtmCreaterWpf
             using (OpenFileDialog fd = new OpenFileDialog())
             {
                 fd.Filter = "Pdf file (*.pdf) | *.pdf;"; ;
+                fd.Multiselect = true;
 
                 var result = fd.ShowDialog();
 
                 if(result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(fd.FileName))
                 {
-                    string pdfFilePath = fd.FileName;
+                    string[] pdfFilePaths = fd.FileNames;
 
                     CheckAndDeleteTempDir();
 
                     Directory.CreateDirectory(_tempDirPath);
 
-                    new Pdf(pdfFilePath).CreateImages(_tempDirPath);
+                    new Pdf(pdfFilePaths).CreateImages(_tempDirPath);
                     
                 }
 
@@ -201,6 +208,24 @@ namespace HtmCreaterWpf
         private void SetPageIndex()
         {
             txtNumberPage.Text = "Страница №" + _container.CurrentIndex;
+        }
+
+        private void InitExamples()
+        {
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), NAME_FILE_EXAMPLE);
+
+            if (!File.Exists(filePath))
+                File.Create(filePath);
+
+            string[] examplesStr = File.ReadAllLines(filePath);
+
+            cmbBoxExample.ItemsSource = examplesStr;
+
+        }
+
+        private void CmbBoxExample_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            txtBoxHtmName.Text = cmbBoxExample.SelectedItem.ToString();
         }
     }
 }

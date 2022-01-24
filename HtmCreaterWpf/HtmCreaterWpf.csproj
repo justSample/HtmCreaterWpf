@@ -66,6 +66,7 @@
     <Compile Include="Utils\ElementContainer.cs" />
     <Compile Include="Utils\ElementInfo.cs" />
     <Compile Include="Utils\HtmCreater.cs" />
+    <Compile Include="Utils\InfoExample.cs" />
     <Compile Include="Utils\Pdf.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
